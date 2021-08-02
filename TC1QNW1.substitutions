@@ -1,0 +1,20 @@
+file QuantumNorthwest.template {
+pattern {S, TA, DN, peltier, address}
+       {"CG3" "SE" "QNTC1" "Peltier1" "F1"}
+       {"CG3" "SE" "QNTC2" "Peltier1" "R1"}
+
+}
+
+file putCallback.template
+{
+   pattern { P, C, EGU, OUT, IN, TOL, TO, ST }
+   { CG3:SE:QNTC1, SP1, C, CG3:SE:QNTC1:WTT, CG3:SE:QNTC1:RTH, 0.5, 3600, 30}
+   { CG3:SE:QNTC2, SP2, C, CG3:SE:QNTC2:WTT, CG3:SE:QNTC2:RTH, 0.5, 3600, 30}
+
+}
+
+file TC1Common.db
+{
+  pattern {S, TA }
+          {"CG3" "SE"}
+}

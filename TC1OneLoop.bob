@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>$(S)</name>
+  <width>400</width>
+  <height>350</height>
+  <actions>
+  </actions>
+  <widget type="group" version="2.0.0">
+    <name>TC1$(S)</name>
+    <y>6</y>
+    <width>391</width>
+    <height>343</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <actions>
+    </actions>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button</name>
+      <actions>
+        <action type="open_display">
+          <file>TC1Details1Loop.bob</file>
+          <target>replace</target>
+          <description>TC1Details</description>
+        </action>
+      </actions>
+      <text>TC Details</text>
+      <x>165</x>
+      <y>270</y>
+      <width>175</width>
+      <height>35</height>
+      <background_color>
+        <color red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <tooltip>$(actions)</tooltip>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>Combo</name>
+      <pv_name>$(S):AlarmEnable</pv_name>
+      <x>162</x>
+      <y>234</y>
+      <width>181</width>
+      <background_color>
+        <color red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>LED</name>
+      <pv_name>$(S):OK</pv_name>
+      <bit>0</bit>
+      <x>121</x>
+      <y>238</y>
+      <width>22</width>
+      <height>22</height>
+      <off_color>
+        <color name="MAJOR" red="255" green="0" blue="0">
+        </color>
+      </off_color>
+      <line_color>
+        <color red="150" green="150" blue="150">
+        </color>
+      </line_color>
+      <actions>
+      </actions>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_23</name>
+      <text>ALARM</text>
+      <x>6</x>
+      <y>236</y>
+      <width>80</width>
+      <height>26</height>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_13</name>
+      <text>Write Stirrer Speed</text>
+      <x>40</x>
+      <y>198</y>
+      <width>125</width>
+      <height>37</height>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>Text Input_1</name>
+      <pv_name>$(S):WriteStirrerSpeed</pv_name>
+      <x>168</x>
+      <y>204</y>
+      <width>80</width>
+      <height>26</height>
+      <background_color>
+        <color name="WritePV_Background" red="128" green="255" blue="255">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_9</name>
+      <pv_name>$(S):ReadStirrerSpeed</pv_name>
+      <x>260</x>
+      <y>204</y>
+      <width>80</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_12</name>
+      <pv_name>$(S):ReadStirrerStatus</pv_name>
+      <x>167</x>
+      <y>168</y>
+      <width>172</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>Boolean Button</name>
+      <pv_name>$(S):WriteStirrerOFFON</pv_name>
+      <x>83</x>
+      <y>160</y>
+      <width>71</width>
+      <height>41</height>
+      <off_label>OFF</off_label>
+      <off_color>
+        <color name="Off" red="60" green="100" blue="60">
+        </color>
+      </off_color>
+      <on_label>ON</on_label>
+      <on_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <background_color>
+        <color red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_12</name>
+      <text>Write Ramp Rate</text>
+      <x>43</x>
+      <y>132</y>
+      <width>121</width>
+      <height>37</height>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>Text Input</name>
+      <pv_name>$(S):WriteRampRate</pv_name>
+      <x>174</x>
+      <y>138</y>
+      <width>80</width>
+      <height>26</height>
+      <background_color>
+        <color name="WritePV_Background" red="128" green="255" blue="255">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_8</name>
+      <pv_name>$(S):ReadRampRate</pv_name>
+      <x>263</x>
+      <y>138</y>
+      <width>73</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_10</name>
+      <pv_name>$(S):ReadTargetTemp</pv_name>
+      <x>263</x>
+      <y>108</y>
+      <width>73</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>Text Input_2</name>
+      <pv_name>$(S):WriteTargetTemp</pv_name>
+      <x>173</x>
+      <y>108</y>
+      <width>80</width>
+      <height>26</height>
+      <background_color>
+        <color name="WritePV_Background" red="128" green="255" blue="255">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_14</name>
+      <text>Write Target Temp</text>
+      <x>42</x>
+      <y>102</y>
+      <width>124</width>
+      <height>37</height>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_7</name>
+      <text>Probe Temp</text>
+      <x>76</x>
+      <y>72</y>
+      <width>87</width>
+      <height>37</height>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_7</name>
+      <pv_name>$(S):ReadProbeTemperature</pv_name>
+      <x>172</x>
+      <y>78</y>
+      <width>73</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_13</name>
+      <pv_name>$(S):ReadTempControlStability</pv_name>
+      <x>172</x>
+      <y>47</y>
+      <width>157</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_14</name>
+      <pv_name>$(S):ReadTempControlStatus</pv_name>
+      <x>172</x>
+      <y>15</y>
+      <width>156</width>
+      <height>26</height>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color red="0" green="128" blue="255">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>Boolean Button_1</name>
+      <pv_name>$(S):WriteTempControlOFFON</pv_name>
+      <x>82</x>
+      <y>6</y>
+      <width>75</width>
+      <height>43</height>
+      <off_label>OFF</off_label>
+      <off_color>
+        <color name="Off" red="60" green="100" blue="60">
+        </color>
+      </off_color>
+      <on_label>ON</on_label>
+      <on_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <background_color>
+        <color red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+    </widget>
+  </widget>
+</display>

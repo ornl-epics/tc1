@@ -1,0 +1,151 @@
+# General Settings
+##################################################
+
+OutTerminator = CR;
+InTerminator = "]";
+ReplyTimeout = 2000;
+LockTimeout = 2500;
+ReadTimeout  = 2000;
+ExtraInput   = Ignore;
+
+# Read Sample Holder ID
+RHI {
+   out "[\$1 ID ?]";
+   in "[\$1 ID %i";
+}
+
+# Read Firmware Version
+RFID {
+   out "[\$1 VN ?]";
+   in "[\$1 VN %f";
+}
+
+# Read Max Stirrer Speed
+RMSS{   
+   out "[\$1 MS ?]";
+   in "[\$1 MS %i";
+}
+
+# Read Lowest Stirrer Speed
+RLSS{
+   out "[\$1 LS ?]";
+   in "[\$1 LS %i";
+}
+
+# Set Stirrer Speed
+WSS {
+   out "[\$1 SS S %i]";
+}
+
+WSOFFON{
+   out "[\$1 SS %{-|+}]";
+}
+
+# Read Stirrer Speed
+RSS {
+  out "[\$1 SS ?]";
+  in  "[\$1 SS %i";
+}
+
+#Write Temp Control ON OFF
+WTCOFFON{
+   out "[\$1 TC %{-|+}]";
+}
+
+# Read Temperature Control Status
+RTCS {
+   out "[\$1 TC ?]";
+   in  "[\$1 TC %{-|+}";
+}
+
+# Read Temp Control Stability
+RTCSS {
+   out "[\$1 IS ?]";
+   in  "[\$1 IS %*i%*1c%*1c%{C|S}";
+}
+
+
+
+#Write Target Temp
+WTT{
+   out "[\$1 TT S %f]";
+}
+
+
+#Read Target Temp
+RTT{
+  out "[\$1 TT ?]"; 	
+  in  "[\$1 TT %f";
+}
+
+# Read Max Target Temp
+RMTT {
+   out "[\$1 MT ?]";
+   in  "[\$1 MT %i";
+}
+
+
+# Read Lowest Target Temp
+RLTT{
+   out "[\$1 LT ?]";
+   in  "[\$1 LT %i";
+}
+
+# Read Instrument Status
+RIS {
+   out "[\$1 IS ?]";
+   in  "%39c";
+}
+
+# Read Stirrer Status
+RSST {
+   in  "[\$1 IS %*i%{-|+}%*2c";
+}
+
+#Read Holder Temp
+RHT{
+  out "[\$1 CT ?]";
+  in  "[\$1 CT %f";
+}
+
+#Read Probe Temp
+RPT{
+  out "[\$1 PT ?]";
+  in  "[\$1 PT %f";
+}
+
+
+# Set ramp rate
+WRR {
+   out "[\$1 RR S %f]";
+}
+
+#Read Ramp Rate
+
+RRR{
+  out "[\$1 RR ?]";
+  in  "[\$1 RR %f";
+}
+
+#Read Heat Exchange High Limit
+RHEHL{
+  out "[\$1 HL ?]";
+  in  "[\$1 HL %i";
+}
+
+
+#Read Heat Exchange Temp
+RHET{
+  out "[\$1 HT ?]";
+  in  "[\$1 HT %i";
+}
+
+#Read Errors
+RE {
+   out "[\$1 ER ?]";
+   in "[\$1 ER %i";
+}
+
+
+
+

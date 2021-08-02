@@ -1,0 +1,299 @@
+##############################################################
+#Common Section for all peltiers 
+##############################################################
+
+##############################################################
+#SP, Ramp Rate, ON Off Control, Common Sets
+##############################################################
+record(ao, "$(S):$(TA):QNTC:GSP") {
+	field(DESC, "Global SP no Call Back")
+   	field(PREC, "2")
+   	field(EGU, "C")
+   	info(autosaveFields, "VAL")
+   	info(archive, "Monitor, 00:00:01, VAL")
+        field(EGU, "C")
+        field(PREC, "2")
+        field(DRVH, "100")
+        field(DRVL, "-5")
+        field(HOPR, "100")
+        field(LOPR, "-5")
+        field(HIHI, "100")
+        field(LOLO, "-5")
+	field(FLNK, "$(S):$(TA):QNTC:GSPSeq.PROC CPP NMS")
+}
+
+record(ao, "$(S):$(TA):QNTC:GSPCB") {
+   	field(DESC, "Global SP Call Back")
+   	field(PREC, "2")
+   	field(EGU, "C")
+   	info(autosaveFields, "VAL")
+   	info(archive, "Monitor, 00:00:01, VAL")
+   	field(FLNK, "$(S):$(TA):QNTC:GSPSeqCB.PROC CPP NMS")
+        field(EGU, "C")
+        field(PREC, "2")
+        field(DRVH, "100")
+        field(DRVL, "-5")
+        field(HOPR, "100")
+        field(LOPR, "-5")
+        field(HIHI, "100")
+        field(LOLO, "-5")
+
+}
+
+record(bo, "$(S):$(TA):QNTC:GRSTCB") {
+   	field(DESC, "Global SP Call Back Reset")
+   	field(HIGH, "1")
+   	info(autosaveFields, "VAL")
+   	info(archive, "Monitor, 00:00:01, VAL")
+   	field(FLNK, "$(S):$(TA):QNTC:GRSTSeqCB.PROC CPP NMS")
+}
+
+#########################################################################
+#Limits DRVH DRVL HOPR LOPR
+#########################################################################
+
+record(ao, "$(S):$(TA):QNTC:GWTTDRVH") {
+        field(DESC, "Write Global Target High Temp Limits")
+        field(PINI, "YES")
+        field(EGU, "C")
+        info(autosaveFields, "VAL")
+        field(ASG, "BEAMLINE")
+}
+
+record(ao, "$(S):$(TA):QNTC:GWTTDRVL") {
+        field(DESC, "Write Global Target Low Temp Limits")
+        field(PINI, "YES")
+        field(EGU, "C")
+        info(autosaveFields, "VAL")
+        field(ASG, "BEAMLINE")
+}
+
+record(bo, "$(S):$(TA):QNTC:GWRLIMS"){
+        info(DESC, "Write Limits")
+        field(ASG, "BEAMLINE")
+        field(FLNK, "$(S):$(TA):QNTC:GLimSeq")
+        field(ZNAM, "Apply")
+        field(ONAM, "Applying")
+        field(HIGH, "1")
+}
+
+record (seq, "$(S):$(TA):QNTC:GLimSeq")
+{
+        info(DESC, "Sequence for Limits")
+        field(DOL1, "$(S):$(TA):QNTC:GWTTDRVH")
+        field(LNK1, "$(S):$(TA):QNTC:GSP.DRVH")
+        field(DOL2, "$(S):$(TA):QNTC:GWTTDRVH")
+        field(LNK2, "$(S):$(TA):QNTC:GSP.HOPR")
+        field(DOL3, "$(S):$(TA):QNTC:GWTTDRVL")
+        field(LNK3, "$(S):$(TA):QNTC:GSP.DRVL")
+        field(DOL4, "$(S):$(TA):QNTC:GWTTDRVL")
+        field(LNK4, "$(S):$(TA):QNTC:GSP.LOPR")
+        field(DOL5, "$(S):$(TA):QNTC:GWTTDRVH")
+        field(LNK5, "$(S):$(TA):QNTC:GSPCB.DRVH")
+        field(DOL6, "$(S):$(TA):QNTC:GWTTDRVH")
+        field(LNK6, "$(S):$(TA):QNTC:GSPCB.HOPR")
+        field(DOL7, "$(S):$(TA):QNTC:GWTTDRVL")
+        field(LNK7, "$(S):$(TA):QNTC:GSPCB.DRVL")
+        field(DOL8, "$(S):$(TA):QNTC:GWTTDRVL")
+        field(LNK8, "$(S):$(TA):QNTC:GSPCB.LOPR")
+        info(autosaveFields, "VAL")
+        field(ASG, "BEAMLINE")
+}
+#########################################################################
+
+record(ao, "$(S):$(TA):QNTC:GRR") {
+   	field(PREC, "0")
+   	field(EGU, "C/Min")
+   	info(autosaveFields, "VAL")
+   	info(archive, "Monitor, 00:00:01, VAL")
+   	field(EGU, "C/Min")
+   	field(DRVH, "10")
+   	field(DRVL, "0")
+   	field(HOPR, "10")
+   	field(LOPR, "0")
+   	field(PREC, "0")
+}
+
+
+
+record(mbboDirect, "$(S):$(TA):QNTC:Select") {
+   	field(PINI, "YES")
+   	field(DESC, "Select the Peltiers for Global changes")
+#   	field(FLNK, "$(S):$(TA):QNTC:GSPSeq.PROC CPP NMS")
+   	info(autosaveFields, "VAL")
+   	info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+record(sseq, "$(S):$(TA):QNTC:GSPSeq") {
+   	field(DESC, "No call back Global SP")
+   	field(SELM, "Mask")
+   	field(SELL, "$(S):$(TA):QNTC:Select")
+   	field(LNK1, "$(S):$(TA):QNTC1:WTT CA")
+   	field(DOL1, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY1, "0.2")
+   	field(LNK2, "$(S):$(TA):QNTC2:WTT CA")
+   	field(DOL2, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY2, "0.2")
+   	field(LNK3, "$(S):$(TA):QNTC3:WTT CA")
+   	field(DOL3, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY3, "0.2")
+   	field(LNK4, "$(S):$(TA):QNTC4:WTT CA")
+   	field(DOL4, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY4, "0.2")
+   	field(LNK5, "$(S):$(TA):QNTC5:WTT CA")
+   	field(DOL5, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY5, "0.2")
+   	field(LNK6, "$(S):$(TA):QNTC6:WTT CA")
+   	field(DOL6, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY6, "0.2")
+   	field(LNK7, "$(S):$(TA):QNTC7:WTT CA")
+   	field(DOL7, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY7, "0.2")
+   	field(LNK8, "$(S):$(TA):QNTC8:WTT CA")
+   	field(DOL8, "$(S):$(TA):QNTC:GSP CP NMS")
+   	field(DLY8, "0.2")
+   	field(FLNK, "$(S):$(TA):QNTC:GRRSeq.PROC CPP NMS")
+   	info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+
+record(sseq, "$(S):$(TA):QNTC:GSPSeqCB") {
+	field(DESC, "call back Global SP")
+   	field(SELM, "Mask")
+   	field(SELL, "$(S):$(TA):QNTC:Select")
+   	field(LNK1, "$(S):$(TA):QNTC1:SP1Set CA")
+   	field(DOL1, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY1, "0.2")
+   	field(LNK2, "$(S):$(TA):QNTC2:SP2Set CA NMS")
+   	field(DOL2, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY2, "0.2")
+   	field(LNK3, "$(S):$(TA):QNTC3:SP1Set CA NMS")
+   	field(DOL3, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY3, "0.2")
+   	field(LNK4, "$(S):$(TA):QNTC4:SP2Set CA NMS")
+   	field(DOL4, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY4, "0.2")
+   	field(LNK5, "$(S):$(TA):QNTC5:SP1Set CA NMS")
+   	field(DOL5, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY5, "0.2")
+   	field(LNK6, "$(S):$(TA):QNTC6:SP2Set CA NMS")
+   	field(DOL6, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY6, "0.2")
+   	field(LNK7, "$(S):$(TA):QNTC7:SP1Set CA NMS")
+   	field(DOL7, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY7, "0.2")
+   	field(LNK8, "$(S):$(TA):QNTC8:SP2Set CA NMS")
+   	field(DOL8, "$(S):$(TA):QNTC:GSPCB")
+   	field(DLY8, "0.2")
+   	info(archive, "Monitor, 00:00:01, VAL")
+   	field(WAIT1, "After8")
+   	field(WAIT2, "After8")
+   	field(WAIT3, "After8")
+   	field(WAIT4, "After8")
+   	field(WAIT5, "After8")
+   	field(WAIT6, "After8")
+   	field(WAIT7, "After8")
+   	field(WAIT8, "After8")
+}
+
+
+record(sseq, "$(S):$(TA):QNTC:GRSTSeqCB") {
+   	field(DESC, "Reset global Callback")
+   	field(LNK1, "$(S):$(TA):QNTC1:SP1Busy CA")
+   	field(DOL1, "0")
+   	field(LNK2, "$(S):$(TA):QNTC2:SP2Busy CA")
+   	field(DOL2, "0")
+   	field(LNK3, "$(S):$(TA):QNTC3:SP1Busy CA")
+   	field(DOL3, "0")
+   	field(LNK4, "$(S):$(TA):QNTC4:SP2Busy CA")
+   	field(DOL4, "0")
+   	field(LNK5, "$(S):$(TA):QNTC5:SP1Busy CA")
+   	field(DOL5, "0")
+   	field(LNK6, "$(S):$(TA):QNTC6:SP2Busy CA")
+   	field(DOL6, "0")
+   	field(LNK7, "$(S):$(TA):QNTC7:SP1Busy CA")
+   	field(DOL7, "0")
+   	field(LNK8, "$(S):$(TA):QNTC8:SP2Busy CA")
+   	field(DOL8, "0")
+   	info(archive, "Monitor, 00:00:01, VAL")
+}
+
+record(calc, "$(S):$(TA):QNTC:GCBSts") {
+        field(DESC, "global Callback status")
+        field(PINI, "YES")
+        field(INPA, "$(S):$(TA):QNTC1:SP1Busy CP NMS")
+        field(INPB, "$(S):$(TA):QNTC2:SP2Busy CP NMS")
+        field(INPC, "$(S):$(TA):QNTC3:SP1Busy CP NMS")
+        field(INPD, "$(S):$(TA):QNTC4:SP2Busy CP NMS")
+        field(INPE, "$(S):$(TA):QNTC5:SP1Busy CP NMS")
+        field(INPF, "$(S):$(TA):QNTC6:SP2Busy CP NMS")
+        field(INPG, "$(S):$(TA):QNTC7:SP1Busy CP NMS")
+        field(INPH, "$(S):$(TA):QNTC8:SP2Busy CP NMS")
+        field(CALC, "A|B|C|D|E|F|G|H")
+        field(HIHI, "1")
+        field(HHSV, "MAJOR") 
+        info(archive, "Monitor, 00:00:01, VAL")
+        
+}
+
+
+record(seq, "$(S):$(TA):QNTC:GRRSeq") {
+   	field(SELM, "Mask")
+   	field(SELL, "$(S):$(TA):QNTC:Select")
+   	field(LNK1, "$(S):$(TA):QNTC1:WRR CA")
+   	field(DOL1, "$(S):$(TA):QNTC:GRR CPP NMS")
+   	field(LNK2, "$(S):$(TA):QNTC2:WRR CA")
+  	field(DOL2, "$(S):$(TA):QNTC:GRR")
+   	field(LNK3, "$(S):$(TA):QNTC3:WRR CA")
+   	field(DOL3, "$(S):$(TA):QNTC:GRR")
+   	field(LNK4, "$(S):$(TA):QNTC4:WRR CA")
+   	field(DOL4, "$(S):$(TA):QNTC:GRR")
+   	field(LNK5, "$(S):$(TA):QNTC5:WRR CA")
+   	field(DOL5, "$(S):$(TA):QNTC:GRR")
+   	field(LNK6, "$(S):$(TA):QNTC6:WRR CA")
+   	field(DOL6, "$(S):$(TA):QNTC:GRR")
+   	field(LNK7, "$(S):$(TA):QNTC7:WRR CA")
+   	field(DOL7, "$(S):$(TA):QNTC:GRR")
+   	field(LNK8, "$(S):$(TA):QNTC8:WRR CA")
+   	field(DOL8, "$(S):$(TA):QNTC:GRR")
+   	info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+##############################################################
+#Alarms
+##############################################################
+record(bi, "$(S):$(TA):QNTC:GAlarmEnable")
+{
+        field(DESC, "Summary Alarm Enable")
+        field(ZNAM, "AlarmDisabled")
+        field(ONAM, "AlarmEnabled")
+        field(ASG, "ALWAYS")
+        field(PINI, "YES")
+        info(autosaveFields, "VAL")
+        field(ZSV, "MINOR")
+        info(archive, "Monitor, 00:00:01, VAL")
+}
+
+
+record(calc, "$(S):$(TA):QNTC:GAlarm")
+{
+    	field(INPA, "$(S):$(TA):QNTC:GAlarmEnable NMS CPP")
+    	field(INPB, "$(S):$(TA):QNTC1:OK NMS CPP")
+    	field(INPC, "$(S):$(TA):QNTC2:OK NMS CPP")
+    	field(INPD, "$(S):$(TA):QNTC3:OK NMS CPP")
+    	field(INPE, "$(S):$(TA):QNTC4:OK NMS CPP")
+    	field(INPF, "$(S):$(TA):QNTC5:OK NMS CPP")
+    	field(INPG, "$(S):$(TA):QNTC6:OK NMS CPP")
+    	field(INPH, "$(S):$(TA):QNTC7:OK NMS CPP")
+    	field(INPI, "$(S):$(TA):QNTC8:OK NMS CPP")
+    	field(CALC, "A&(!B|!C|!D|!E|!F|!G|!H|!I)")
+    	field(HIHI, "1")
+    	field(LOLO, "0")
+    	field(HHSV, "MAJOR")
+    	field(LLSV, "NO_ALARM")
+    	field(PINI, "YES")
+    	info(archive, "Monitor, 00:00:01, VAL")
+}

@@ -1,0 +1,437 @@
+record (seq, "$(S):$(TA):$(DN):PINISeq")
+{
+    	info(DESC, "Sequence for Comms start")
+    	field(PINI, "YES")
+    	field(LNK1, "$(S):$(TA):$(DN):RMTT.PROC")
+    	field(DO1, "1")
+    	field(DLY1, "0")
+    	field(LNK2, "$(S):$(TA):$(DN):RLTT.PROC")
+    	field(DO2, "1")
+    	field(DLY2, "0.2")
+    	field(LNK3, "$(S):$(TA):$(DN):RHEHL.PROC")
+    	field(DO3, "1")
+    	field(DLY3, "0.2")
+    	field(LNK4, "$(S):$(TA):$(DN):RFID.PROC")
+    	field(DO4, "1")
+    	field(DLY4, "0.2")
+    	field(LNK5, "$(S):$(TA):$(DN):RHI.PROC")
+    	field(DO5, "1")
+    	field(DLY5, "0.2")
+}
+
+
+
+
+
+
+record (seq, "$(S):$(TA):$(DN):COM1Seq")
+{
+    	info(DESC, "Sequence for Comms")
+    	field(SCAN, "5 second")
+    	field(LNK1, "$(S):$(TA):$(DN):RTCS.PROC")
+    	field(DO1, "1")
+    	field(LNK2, "$(S):$(TA):$(DN):RTCSS.PROC")
+    	field(DO2, "1")
+    	field(DLY2, "0.2")
+    	field(LNK3, "$(S):$(TA):$(DN):RPT.PROC")
+    	field(DO3, "1")
+    	field(DLY3, "0.2")
+    	field(LNK4, "$(S):$(TA):$(DN):RTT.PROC")
+    	field(DO4, "1")
+    	field(DLY4, "0.2")
+    	field(LNK5, "$(S):$(TA):$(DN):RRR.PROC")
+    	field(DO5, "1")
+    	field(DLY5, "0.2")
+    	field(LNK6, "$(S):$(TA):$(DN):RE.PROC")
+    	field(DO6, "1")
+    	field(DLY6, "0.2")
+    	field(LNK7, "$(S):$(TA):$(DN):OK.PROC")
+    	field(DO7, "1")
+    	field(DLY7, "0.2")
+    	field(LNK8, "$(S):$(TA):$(DN):RHET.PROC")
+    	field(DO8, "1")
+    	field(DLY8, "0.2")
+    	field(LNK9, "$(S):$(TA):$(DN):RTH.PROC")
+    	field(DO9, "1")
+    	field(DLY9, "0.2")
+    	field(LNKA, "$(S):$(TA):$(DN):COM2Seq.PROC")
+    	field(DOA, "1")
+    	field(DLYA, "0.2")
+}
+
+record (seq, "$(S):$(TA):$(DN):COM2Seq")
+{
+    	info(DESC, "Trigger Setpoints")
+    	field(LNK1, "$(S):$(TA):$(DN):WTT.DISA")
+    	field(DO1, "0")
+    	field(LNK2, "$(S):$(TA):$(DN):WTT.PROC")
+    	field(DO2, "1")
+    	field(DLY1, "0.1")
+    	field(LNK3, "$(S):$(TA):$(DN):WTT.DISA")
+    	field(DO3, "1")
+    	field(LNK4, "$(S):$(TA):$(DN):WRR.DISA")
+    	field(DO4, "0")
+    	field(LNK5, "$(S):$(TA):$(DN):WRR.PROC")
+    	field(DO5, "1")
+    	field(DLY6, "0.1")
+   	field(LNK6, "$(S):$(TA):$(DN):WRR.DISA")
+    	field(DO6, "1")
+}
+
+#Write Temp control
+record(ao, "$(S):$(TA):$(DN):WTT") {
+    	info(autosaveFields, "VAL")
+    	info(DESC, "Write Target Temperature")
+    	field(SDIS, "1")
+    	field(DISA, "0")
+    	field(DTYP, "stream")
+    	field(OUT, "@TC1.proto WTT($(address)) $(peltier)")
+    	info(archive, "Monitor, 00:00:01, VAL")
+    	field(EGU, "C")
+    	field(PREC, "2")
+}
+#####################################################
+#Limits DRVH DRVL HOPR LOPR
+#####################################################
+record(ao, "$(S):$(TA):$(DN):WTTDRVH") {
+        field(DESC, "Write Target High Temp Limits")
+        field(PINI, "YES")
+        field(EGU, "C")
+        info(autosaveFields, "VAL")
+    	field(ASG, "BEAMLINE")
+}
+
+record(ao, "$(S):$(TA):$(DN):WTTDRVL") {
+        field(DESC, "Write Target Low Temp Limits")
+        field(PINI, "YES")
+        field(EGU, "C")
+        info(autosaveFields, "VAL")
+        field(ASG, "BEAMLINE")
+}
+
+record(bo, "$(S):$(TA):$(DN):WRLIMS"){
+        info(DESC, "Write Limits")
+        field(ASG, "BEAMLINE")
+        field(FLNK, "$(S):$(TA):$(DN):LimSeq")
+        field(ZNAM, "Apply")
+	field(ONAM, "Applying")
+        field(HIGH, "1")
+}
+
+record (seq, "$(S):$(TA):$(DN):LimSeq")
+{
+        info(DESC, "Sequence for Limits")
+        field(DOL1, "$(S):$(TA):$(DN):WTTDRVH")
+        field(LNK1, "$(S):$(TA):$(DN):WTT.DRVH")
+        field(DOL2, "$(S):$(TA):$(DN):WTTDRVH")
+        field(LNK2, "$(S):$(TA):$(DN):WTT.HOPR")
+        field(DOL3, "$(S):$(TA):$(DN):WTTDRVL")
+        field(LNK3, "$(S):$(TA):$(DN):WTT.DRVL")
+        field(DOL4, "$(S):$(TA):$(DN):WTTDRVL")
+        field(LNK4, "$(S):$(TA):$(DN):WTT.LOPR")
+        info(autosaveFields, "VAL")
+        field(ASG, "BEAMLINE")
+}
+
+#################################################
+#Write Ramp RAte
+#################################################
+
+
+record(ao, "$(S):$(TA):$(DN):WRR") {
+    	info(autosaveFields, "VAL")
+    	field(DESC, "Write Ramp Rate")
+    	field(SDIS, "1")
+    	field(DISA, "0")
+    	field(DTYP, "stream")
+    	field(OUT, "@TC1.proto WRR($(address)) $(peltier)")
+    	field(SCAN, "Passive")
+    	field(PINI, "NO")
+    	field(EGU, "C/Min")
+    	field(DRVH, "10")
+    	field(DRVL, "0")
+    	field(HOPR, "10")
+    	field(LOPR, "0")
+    	field(PREC, "0")
+}
+
+
+#Read Holder ID
+record (mbbi, "$(S):$(TA):$(DN):RHI")
+{
+    	info(DESC, "Get the Sample holder ID")
+    	field(DTYP, "stream")
+    	field(INP, "@TC1.proto RHI($(address)) $(peltier)")
+	info (archive, "monitor, 00:01:00, VAL")
+	field (ZRVL, "0")
+	field (ONVL, "14")
+	field (TWVL, "24")
+	field (THVL, "34")
+        field (ZRST, "Special")
+        field (ONST, "t2")
+        field (TWST, "t2x2")
+        field (THST, "turret or multisampler")
+}
+
+#Get Status of the chiller Run=1 Standby=0
+record(ai, "$(S):$(TA):$(DN):RFID") {
+  	info(DESC, "Read Firmware Version")
+  	field(DTYP, "stream")
+  	field(INP, "@TC1.proto RFID($(address)) $(peltier)")
+  	field(SCAN, "Passive")
+  	info(archive, "Monitor, 00:00:01, VAL")
+  	field(PREC, "2")
+}
+
+
+#Get Max Stirrer Speed
+record(ai, "$(S):$(TA):$(DN):RMSS") {
+  	info(DESC, "Read Max Stirrer Speed")
+  	field(DTYP, "stream")
+  	field(INP, "@TC1.proto RMSS($(address)) $(peltier)")
+  	info(archive, "Monitor, 00:00:01, VAL")
+  	field(EGU, "RPM")
+  	field(PREC, "0")
+}
+
+
+#Get Lowest Stirrer Speed
+record(ai, "$(S):$(TA):$(DN):RLSS") {
+  	info(DESC, "Read Lowest Stirrer Speed")
+  	field(DTYP, "stream")
+  	field(INP, "@TC1.proto RLSS($(address)) $(peltier)")
+  	info(archive, "Monitor, 00:00:01, VAL")
+  	field(EGU, "RPM")
+  	field(PREC, "0")
+}
+
+
+record(ao, "$(S):$(TA):$(DN):WSS") {
+  	info(autosaveFields, "VAL")
+  	field(DESC, "Write Stirrer Speed")
+  	field(DTYP, "stream")
+  	field(OUT, "@TC1.proto WSS($(address)) $(peltier)")
+  	field(SCAN, "Passive")
+  	field(EGU, "RPM")
+  	field(DRVH, "2500")
+  	field(DRVL, "900")
+  	field(HOPR, "2500")
+  	field(LOPR, "900")
+  	field(PREC, "0")
+  	field(HIHI, "2500")
+  	field(LOLO, "900")
+}
+
+
+record(bo, "$(S):$(TA):$(DN):WSOFFON") {
+  	info(autosaveFields, "VAL")
+ 	field(DESC, "Write Stirrer OFF ON")
+  	field(DTYP, "stream")
+  	field(OUT, "@TC1.proto WSOFFON($(address)) $(peltier)")
+}
+
+
+
+#Get Stirrer Speed
+record(ai, "$(S):$(TA):$(DN):RSS") {
+	info(DESC, "Read Actual Stirrer Speed")
+   	field(DTYP, "stream")
+   	field(INP, "@TC1.proto RSS($(address)) $(peltier)")
+   	info(archive, "Monitor, 00:00:01, VAL")
+   	field(EGU, "RPM")
+   	field(PREC, "0")
+}
+          
+
+record(bo, "$(S):$(TA):$(DN):WTCOFFON") {
+  	info(autosaveFields, "VAL")
+  	field(DESC, "Write Temp Control OFF ON")
+  	field(DTYP, "stream")
+  	field(OUT, "@TC1.proto WTCOFFON($(address)) $(peltier)")
+}
+
+
+
+record(ai, "$(S):$(TA):$(DN):RTT") {
+    	info(DESC, "Read Target Temp ")
+    	field(DTYP, "stream")
+    	field(INP, "@TC1.proto RTT($(address)) $(peltier)")
+    	info(archive, "Monitor, 00:00:01, VAL")
+    	field(EGU, "C")
+    	field(PREC, "2")
+}
+             
+
+record(ai, "$(S):$(TA):$(DN):RMTT") {
+    	info(DESC, "Read Max Temp ")
+    	field(DTYP, "stream")
+    	field(INP, "@TC1.proto RMTT($(address)) $(peltier)")
+    	info(archive, "Monitor, 00:00:01, VAL")
+    	field(EGU, "C")
+    	field(PREC, "2")
+}
+
+record(ai, "$(S):$(TA):$(DN):RLTT") {
+    	info(DESC, "Read Lowest Temp ")
+    	field(DTYP, "stream")
+    	field(INP, "@TC1.proto RLTT($(address)) $(peltier)")
+    	info(archive, "Monitor, 00:00:01, VAL")
+    	field(EGU, "C")
+    	field(PREC, "2")
+}
+
+
+record (stringin, "$(S):$(TA):$(DN):RIS")
+{
+        info(DESC, "Read the Instrument Status")
+        field(DTYP, "stream")
+        field(INP, "@TC1.proto RIS($(address)) $(peltier)")
+        info (archive, "monitor, 00:01:00, VAL")
+}
+
+
+record(bi, "$(S):$(TA):$(DN):RSST") {
+  	field(DESC, "Read the StirrerStatus")
+  	field(DTYP, "stream")
+  field(INP, "@TC1.proto RSST($(address)) $(peltier)")
+  field(ZNAM, "StirrerOFF")
+  field(ONAM, "StirrerON")
+
+}
+
+record(bi, "$(S):$(TA):$(DN):RTCS") {
+  field(DESC, "Read the Temp Control OFF ON Status")
+  field(DTYP, "stream")
+  field(INP, "@TC1.proto RTCS($(address)) $(peltier)")
+  field(ZNAM, "TempCtrlOFF")
+  field(ONAM, "TempCtrlON")
+}
+
+
+record(bi, "$(S):$(TA):$(DN):RTCSS") {
+  field(DESC, "Read the Temp Control Status Stability")
+  field(DTYP, "stream")
+  field(INP, "@TC1.proto RTCSS($(address)) $(peltier)")
+  field(ZNAM, "TempChanging")
+  field(ONAM, "TempStable")
+}
+  
+
+record(ai, "$(S):$(TA):$(DN):RTH") {
+    info(DESC, "Read Holder Temp")
+    field(DTYP, "stream")
+    field(INP, "@TC1.proto RHT($(address)) $(peltier)")
+    info(archive, "Monitor, 00:00:01, VAL")
+    field(EGU, "C")
+    field(PREC, "2")
+}
+
+
+record(ai, "$(S):$(TA):$(DN):RPT") {
+    info(DESC, "Read Probe Temperature")
+    field(DTYP, "stream")
+    field(INP, "@TC1.proto RPT($(address)) $(peltier)")
+    info(archive, "Monitor, 00:00:01, VAL")
+    field(EGU, "C")
+    field(PREC, "2")
+}
+
+
+record(ai, "$(S):$(TA):$(DN):RRR") {
+    info(DESC, "Read Ramp Rate")
+    field(DTYP, "stream")
+    field(INP, "@TC1.proto RRR($(address)) $(peltier)")
+    info(archive, "Monitor, 00:00:01, VAL")
+    field(EGU, "C/Min")
+    field(PREC, "0")
+}
+
+
+
+record(ai, "$(S):$(TA):$(DN):RHEHL") {
+    info(DESC, "Read High Temp Limit Heat Exchanger")
+    field(DTYP, "stream")
+    field(INP, "@TC1.proto RHEHL($(address)) $(peltier)")
+    info(archive, "Monitor, 00:00:01, VAL")
+    field(EGU, "C")
+    field(PREC, "2")
+}
+
+
+
+record(ai, "$(S):$(TA):$(DN):RHET") {
+    info(DESC, "Read Heat Exchanger Temp")
+    field(DTYP, "stream")
+    field(INP, "@TC1.proto RHET($(address)) $(peltier)")
+    info(archive, "Monitor, 00:00:01, VAL")
+    field(EGU, "C")
+    field(PREC, "2")
+}
+
+
+
+record (mbbi, "$(S):$(TA):$(DN):RE")
+{
+        info(DESC, "Get the Errors")
+        field(DTYP, "stream")
+        field(INP, "@TC1.proto RE($(address)) $(peltier)")
+        info (archive, "monitor, 00:01:00, VAL")
+        field (ZRVL, "4294967295")
+        field (ONVL, "5")
+        field (TWVL, "6")
+        field (THVL, "7")
+        field (FRVL, "8")
+        field (FVVL, "65535")
+        field (ZRST, "NoError")
+        field (ONST, "CellOutofRange")
+        field (TWST, "CellHeatExcError")
+        field (THST, "CoolantError")
+        field (FRST, "232Error")
+        field (FVST, "NoError")
+}
+
+
+
+
+
+
+record(calc, "$(S):$(TA):$(DN):OK")
+{
+    field(INPA, "$(S):$(TA):$(DN):RE.RVAL NMS CP")
+    field(INPB, "$(S):$(TA):$(DN):AlarmEnable NMS CP")	
+    field(CALC, "((A=4294967295)|(A=65535))|!B")
+    field(HIHI, "1")
+    field(LOLO, "0")
+    field(HHSV, "NO_ALARM")
+    field(LLSV, "MAJOR")
+    info (archive, "monitor, 00:01:00, VAL")
+
+}
+
+
+
+
+record(bi, "$(S):$(TA):$(DN):AlarmEnable")
+{
+        field(DESC, "Summary Alarm Enable")
+        field(ZNAM, "AlarmDisabled")
+        field(ONAM, "AlarmEnabled")
+        field(ASG, "ALWAYS")
+        field(PINI, "YES")
+        info(autosaveFields, "VAL")
+	field(ZSV, "MINOR")
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+          
