@@ -1,3 +1,7 @@
-# ages
+# TC1
+EPICS Driver developed by Mariano Ruiz, zma@ornl.gov
+TC1 Peltier Control
 
-AGES Gas handling
+Quantum Northwest TC 1 Temperature Controller Serial interface
+
+EPICS Module ASYN drvAsynIPPortConfigure 
