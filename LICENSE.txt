@@ -1,7 +1,7 @@
-Copyright (c) 2014,2015 UT-Battelle.
+Copyright (c) 2019, 2022 UT-Battelle.
 All rights reserved.
 
-ages is distributed subject to the following license conditions:
+tc1 is distributed subject to the following license conditions:
 
  SOFTWARE LICENSE AGREEMENT
  Software: tc1
